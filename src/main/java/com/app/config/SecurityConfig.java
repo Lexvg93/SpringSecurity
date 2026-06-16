@@ -2,7 +2,6 @@ package com.app.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
@@ -25,16 +24,29 @@ import org.springframework.security.web.SecurityFilterChain;
 @EnableMethodSecurity
 public class SecurityConfig {
 
+    // @Bean
+    // public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception{
+    //     return httpSecurity
+    //         .csrf(csrf -> csrf.disable())
+    //         .httpBasic(Customizer.withDefaults())
+    //         .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+    //         .authorizeHttpRequests(http -> {
+    //             //configurar endpoints publico
+    //             http.requestMatchers(HttpMethod.GET, "/auth/hello").permitAll();
+    //             //configurar endpoints privados
+    //             http.requestMatchers(HttpMethod.GET, "/auth/hello-secured").hasAuthority("READ");
+    //             //cualquier otro endpoints
+    //             http.anyRequest().denyAll();
+    //         })    
+    //         .build();
+    // }
+
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception{
         return httpSecurity
             .csrf(csrf -> csrf.disable())
             .httpBasic(Customizer.withDefaults())
-            .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-            .authorizeHttpRequests(http -> {
-                http.requestMatchers(HttpMethod.GET, "/auth/hello").permitAll();
-                http.requestMatchers(HttpMethod.GET, "/auth/hello-secured").hasAuthority("READ");
-            })    
+            .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS)) 
             .build();
     }
 
